@@ -1,0 +1,98 @@
+{
+  "if":
+  {
+  "allOf": [
+    {
+      "anyOf": [
+        {
+          "field": "[concat('tags[', parameters('environment'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('business-unit'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('owner'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('createdBy'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('business-criticality'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('Department'), ']')]",
+          "exists": "false"
+        }
+      ]
+    },
+    {
+      "not": {
+        "field": "tags['aksEngineVersion']",
+        "exists": "true"
+      }
+    },
+    {
+      "not": {
+        "value": "[resourceGroup().name]",
+        "like": "mc_*"
+      }
+    },
+    {
+      "not": {
+        "value": "[resourceGroup().name]",
+        "like": "NetworkWatcherRG*"
+      }
+    },
+    {
+      "count": {
+        "value": [
+          "aks-agentpool-*-routetable",
+          "k8s-master-*-routetable",
+          "ASRSeed*"
+        ],
+        "name": "likePattern",
+        "where": {
+          "field": "name",
+          "like": "[current('likePattern')]"
+        }
+      },
+      "equals": 0
+    },
+    {
+      "field": "type",
+      "notIn": [
+        "Microsoft.AAD/domainServices",
+        "microsoft.alertsmanagement/actionrules",
+        "microsoft.alertsManagement/smartDetectorAlertRules",
+        "Microsoft.Automation/automationAccounts/configurations",
+        "Microsoft.Compute/restorePointCollections",
+        "Microsoft.Compute/virtualMachines/extensions",
+        "Microsoft.Compute/virtualMachineScaleSets/extensions",
+        "Microsoft.DevTestLab/schedules",
+        "Microsoft.insights/actiongroups",
+        "microsoft.insights/activityLogAlerts",
+        "microsoft.insights/metricalerts",
+        "microsoft.insights/scheduledqueryrules",
+        "Microsoft.Migrate/assessmentProjects",
+        "Microsoft.NetApp/netAppAccounts/capacityPools/volumes",
+        "microsoft.network/networkintentpolicies",
+        "Microsoft.Network/networkWatchers/connectionMonitors",
+        "Microsoft.Network/networkWatchers/flowLogs",
+        "Microsoft.OffAzure/VMwareSites",
+        "Microsoft.OperationsManagement/solutions",
+        "Microsoft.StorageSync/storageSyncServices",
+        "Microsoft.StreamAnalytics/streamingjobs",
+        "Microsoft.Web/certificates"
+      ]
+    }
+  ]
+  },
+  "then": {
+    "effect": "[parameters('effect')]"
+  }
+}

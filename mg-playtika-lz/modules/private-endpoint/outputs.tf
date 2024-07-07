@@ -1,0 +1,1 @@
+output "pe_out" { value = azurerm_private_endpoint.pe }

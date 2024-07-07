@@ -1,0 +1,27 @@
+{
+    "if": {
+      "allOf": [
+        {
+          "equals": "Microsoft.Storage/storageAccounts",
+          "field": "type"
+        },
+        {
+          "not": {
+            "field": "[concat('tags[',parameters('public'), ']')]",
+            "equals": "public"
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "equals": "true",
+              "field": "Microsoft.Storage/storageAccounts/allowBlobPublicAccess"
+            }
+          ]
+        }
+      ]
+    },
+    "then": {
+      "effect": "[parameters('effect')]"
+    }
+  }

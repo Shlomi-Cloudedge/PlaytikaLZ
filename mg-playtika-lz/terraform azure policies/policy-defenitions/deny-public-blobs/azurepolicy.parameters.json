@@ -1,0 +1,22 @@
+{
+    "effect": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Effect",
+        "description": "Deny, Audit or Disabled the execution of the Policy"
+      },
+      "allowedValues": [
+        "Deny",
+        "Audit",
+        "Disabled"
+      ],
+      "defaultValue": "Audit"
+    },
+    "public": {
+        "type": "String",
+        "metadata": {
+         "displayName": "Public Tag Value",
+         "description": "Value of the 'Public' tag"
+        }
+      }
+  }
